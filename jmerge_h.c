@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 ... 2020 2021
+ * Copyright (c) 2013 ... 2021 2022
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -15,7 +15,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef _MSDOS
 #include <sys/param.h>
+#endif
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -24,17 +26,6 @@
 #include <j_lib2m.h>
 
 #include "jmerge.h"
-
-char *jmerge_h_c="$Id: jmerge_h.c,v 2.4 2021/02/21 20:37:58 jmccue Exp $";
-
-extern char *jmerge_c;
-extern char *jmerge_a_c;
-extern char *jmerge_d_c;
-extern char *jmerge_h_c;
-extern char *jmerge_i_c;
-extern char *jmerge_k_c;
-extern char *jmerge_u_c;
-extern char *jmerge_r_c;
 
 /*** Messages ***/
 #define MSG_HELP_11  "Record Merge Utility"
@@ -79,22 +70,12 @@ int show_rev(FILE *fp, char *pname)
 {
 
   fprintf(fp,"%s %s:\n", pname, LIT_REV);
-  fprintf(fp,"\t%s\n", JMERGE_H);
-  fprintf(fp,"\t%s\n", jmerge_c);
-  fprintf(fp,"\t%s\n", jmerge_a_c);
-  fprintf(fp,"\t%s\n", jmerge_d_c);
-  fprintf(fp,"\t%s\n", jmerge_h_c);
-  fprintf(fp,"\t%s\n", jmerge_i_c);
-  fprintf(fp,"\t%s\n", jmerge_k_c);
-  fprintf(fp,"\t%s\n", jmerge_r_c);
-  fprintf(fp,"\t%s\n", jmerge_u_c);
 
 #ifdef J_LIB2M_H
   fprintf(fp, "\t%s\n", J_LIB2M_H);
 #endif
 #ifdef J_LIB2_H
-  fprintf(fp, "\t%s\n", J_LIB2_H);
-  fprintf(fp,"\t     %s %s\n", LIT_INFO_02, j2_get_build());
+  fprintf(fp,"\t%s %s\n", LIT_INFO_02, j2_get_build());
 #endif
 
 #ifdef OSTYPE
@@ -108,5 +89,3 @@ int show_rev(FILE *fp, char *pname)
   return(EXIT_FAILURE);
 
 }  /* show_rev() */
-
-/* END: jmerge_h.c */

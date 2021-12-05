@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 ... 2020 2021
+ * Copyright (c) 2013 ... 2021 2022
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -15,7 +15,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef _MSDOS
 #include <sys/param.h>
+#endif
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -27,8 +29,6 @@
 #include <j_lib2m.h>
 
 #include "jmerge.h"
-
-char *jmerge_k_c="$Id: jmerge_k.c,v 2.4 2021/02/21 20:37:58 jmccue Exp $";
 
 /*
  * add_key_node() -- add an entry
@@ -212,5 +212,3 @@ void free_key_data(struct s_key *k)
   free(k);
 
 } /* free_key_data() */
-
-/* END: jmerge_k.c */

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 ... 2020 2021
+ * Copyright (c) 2013 ... 2021 2022
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -15,7 +15,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef _MSDOS
 #include <sys/param.h>
+#endif
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -26,8 +28,6 @@
 #include <j_lib2m.h>
 
 #include "jmerge.h"
-
-char *jmerge_r_c="$Id: jmerge_r.c,v 2.4 2021/02/21 20:37:58 jmccue Exp $";
 
 /*
  * check_key() -- determine of the entry can be saved
@@ -270,5 +270,3 @@ void load_link(FILE *efp,
     free(buf);
 
 }  /* load_link() */
-
-/* END: jmerge_r.c */

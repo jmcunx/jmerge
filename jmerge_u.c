@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 ... 2020 2021
+ * Copyright (c) 2013 ... 2021 2022
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -15,7 +15,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef _MSDOS
 #include <sys/param.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,8 +27,6 @@
 #include <j_lib2m.h>
 
 #include "jmerge.h"
-
-char *jmerge_u_c="$Id: jmerge_u.c,v 2.3 2021/02/21 20:37:58 jmccue Exp $";
 
 /*
  * open_in() -- open in file
@@ -142,5 +142,3 @@ void init_finfo(struct s_file_info *f)
   f->io    = 0;
 
 } /* init_finfo() */
-
-/* END: jmerge_u.c */

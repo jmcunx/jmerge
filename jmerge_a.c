@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 ... 2020 2021
+ * Copyright (c) 2013 ... 2021 2022
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -15,7 +15,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef _MSDOS
 #include <sys/param.h>
+#endif
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -28,8 +30,6 @@
 #include "jmerge.h"
 
 #define MAXARG 80
-
-char *jmerge_a_c="$Id: jmerge_a.c,v 2.4 2021/02/21 20:37:58 jmccue Exp $";
 
 /*
  * init_get_delm() -- translate a string into a delimiter
@@ -241,5 +241,3 @@ void process_arg(int argc, char **argv, struct s_work *w, struct s_file_data *d1
     }
 
 } /* process_arg() */
-
-/* END: jmerge_a.c */

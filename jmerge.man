@@ -1,5 +1,5 @@
 .\" 
-.\" Copyright (c) 2013 2014 2015 2016 2017 2018 
+.\" Copyright (c) 2013 ... 2021 2022
 .\"     John McCue <jmccue@jmcunx.com>
 .\" 
 .\" Permission to use, copy, modify, and distribute this software for any
@@ -14,14 +14,14 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\" 
-.TH jmerge 1 "$Date: 2018/07/04 16:11:46 $" "JMC" "Local Command"
+.TH jmerge 1 "2018/07/04" "JMC" "Local Command"
 .SH NAME
 jmerge - merge records from 2 data files.
 .SH SYNOPSIS
 jmerge [OPTIONS] FILE1 FILE2
 .SH DESCRIPTION
-Merge data records from 2 delimited text files into a new
-output file.
+Merge data records from 2 Delimited Text Files into a new
+Output File.
 .PP
 Requires exactly 2 input files, FILE1 and FILE2.
 If one the files is named '-' (dash), that file
@@ -137,11 +137,15 @@ FILE1 is the 'main' file, by default, all entries from that file will
 be printed with data from the other files appended to each record.
 This means some data from FILE2 will not be printed
 when a match is not found.
-This behavior can be changed by using argument '-l'.
+This behaviour can be changed by using argument '-l'.
 .PP
 Best if the last character of each record is the delimiter.
 If this is not the case, an empty last field may cause odd
 formatting issues on the output file.
+.BUGS
+This is not an easy utility to use.
+.PP
+Can fail with File sort issues.
 .SH SEE-ALSO
 awk(1),
 comm(1),
@@ -149,7 +153,6 @@ join(1),
 jr(1),
 jcsv(1),
 paste(1),
-se16_01(1),
 uniq(1)
 .SH ERROR-CODES
 .nf

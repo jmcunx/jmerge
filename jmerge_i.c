@@ -15,7 +15,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef _MSDOS
 #include <sys/param.h>
+#endif
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -26,8 +28,6 @@
 #include <j_lib2m.h>
 
 #include "jmerge.h"
-
-char *jmerge_i_c="$Id: jmerge_i.c,v 2.3 2021/02/21 20:37:58 jmccue Exp $";
 
 /*
  * init_d() -- initialize link list
@@ -124,5 +124,3 @@ void init(int argc, char **argv,
     free(k.finfo.fname);
 
 }  /* init() */
-
-/* END: jmerge_i.c */

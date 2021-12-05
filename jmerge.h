@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 ... 2020 2021
+ * Copyright (c) 2013 ... 2021 2022
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -17,7 +17,7 @@
 
 #ifndef JMERGE_H
 
-#define JMERGE_H "$Id: jmerge.h,v 2.2 2020/06/16 00:17:49 jmccue Exp $"
+#define JMERGE_H "INCLUDED"
 
 #define PROG_NAME  "jmerge"
 #define LIST_MODE_1   1
@@ -105,5 +105,3 @@ void show_keys(FILE *, struct s_key_data *);
 void free_key_data(struct s_key *);
 
 #endif /* JMERGE_H */
-
-/* END: jmerge.h */

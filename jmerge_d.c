@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 ... 2020 2021
+ * Copyright (c) 2013 ... 2021 2022
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -15,7 +15,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef _MSDOS
 #include <sys/param.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,11 +29,6 @@
 #include <j_lib2m.h>
 
 #include "jmerge.h"
-
-/*** globals ***/
-char *jmerge_d_c="$Id: jmerge_d.c,v 2.3 2021/02/21 20:37:58 jmccue Exp $";
-
-/*** prototypes ***/
 
 /*
  * is_different() -- determines if field data is different
@@ -191,5 +188,3 @@ int list_match(FILE *fp, int chg, int only_match,
   return(writes);
 
 } /* list_match() */
-
-/* END: jmerge_d.c */
