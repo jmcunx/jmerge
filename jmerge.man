@@ -1,0 +1,158 @@
+.\" 
+.\" Copyright (c) 2013 2014 2015 2016 2017 2018 
+.\"     John McCue <jmccue@jmcunx.com>
+.\" 
+.\" Permission to use, copy, modify, and distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\" 
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\" 
+.TH jmerge 1 "$Date: 2018/07/04 16:11:46 $" "JMC" "Local Command"
+.SH NAME
+jmerge - merge records from 2 data files.
+.SH SYNOPSIS
+jmerge [OPTIONS] FILE1 FILE2
+.SH DESCRIPTION
+Merge data records from 2 delimited text files into a new
+output file.
+.PP
+Requires exactly 2 input files, FILE1 and FILE2.
+If one the files is named '-' (dash), that file
+will be read using standard input (stdin).
+.PP
+The merge is based upon a 'key'.
+This 'key' must be the first field of each file to be processed.
+One of the files must be unique by key.
+It does not matter which of the files are unique by 'key'.
+.PP
+By default, FILE1 is used as the base for the output
+file generated.
+Records with a matching key in FILE2 will be appended
+to the end of each record in FILE1.
+.TP
+-c
+Optional, if specified, will output records where fields
+from each record is different.
+This can be used to show differences between a dump of the same table,
+before/after an update.
+Default is to output all merged data.
+For this mode to work, both input files must:
+.nf
+    1. have the same record format
+    2. be unique by key
+    3. all keys agree between the 2 files
+.fi
+.TP
+-d delm
+Optional, Fields are delimited by char 'delm'.
+If not specified the default is to use '|' as the delimiter.
+For example to use:
+.nf
+    delimiter  Use arg
+    ---------  -------------------
+       |       -d '|'  OR -d 124
+       TAB     -d 9
+       ^G      -d 7
+.fi
+.TP
+-e file
+Optional, if used, write error/stat messages to file 'file'.
+If not specified, messages written to stderr.
+.TP
+-F
+Optional, the first record of each of the files
+is a heading record.
+This avoids the out of sequence error when processing data.
+.TP
+-f
+Force file create.
+Create file even if the target file exists.
+.TP
+-h
+Show brief help and exit.
+.TP
+-l 1|2
+Optional, which match to output.
+.nf
+    delimiter  Use arg
+    ---------  --------------------------------
+       1       List match data based upon FILE1
+       2       List match data based upon FILE2
+.fi
+If not specified will list data based upon FILE1.
+.TP
+-m
+Optional, show only entries where records were matched.
+Default is to show all data whether a match was found or not.
+.TP
+-o file
+Optional, if used, write output to file 'file'.
+If not specified, output written to stdout.
+.TP
+-p kfile
+Optional, based upon the values in file 'kfile',
+filter Input Data to be processed.
+This means only process data with 'keys' listed in this file
+(or not in this file, see -v below).
+.TP
+-q
+Optional, quiet, no NOT print processing stats on stderr.
+.TP
+-V
+Output version information and exit.
+.TP
+-v
+Optional, Invert the sense of matching, to select non-matching
+key lines.
+See '-p' above.
+.TP
+-X
+Optional, show raw information about the files processed on stderr.
+This can show you how data was matched between the two files.
+Note, depending upon the size of the Input Files,
+this could print lots of data.
+.SH DIAGNOSTICS
+Note, if an error occurs while parsing command line arguments,
+errors may be written stderr instead of the error file specified.
+.PP
+At the moment, all files must be delimited by a single character.
+.PP
+All files processed needs a 'key',
+this key is always the first field of each file.
+The key is used as a basis to merge data from the input files.
+.PP
+If you need to use more than one field as a 'key',
+you should preprocess the files using awk(1) and
+generate a new first field as a concatenation of
+the fields you need to examine.
+.PP
+FILE1 is the 'main' file, by default, all entries from that file will
+be printed with data from the other files appended to each record.
+This means some data from FILE2 will not be printed
+when a match is not found.
+This behavior can be changed by using argument '-l'.
+.PP
+Best if the last character of each record is the delimiter.
+If this is not the case, an empty last field may cause odd
+formatting issues on the output file.
+.SH SEE-ALSO
+awk(1),
+comm(1),
+join(1),
+jr(1),
+jcsv(1),
+paste(1),
+se16_01(1),
+uniq(1)
+.SH ERROR-CODES
+.nf
+0         success
+non-zero  process error or help/rev displayed
+.fi
