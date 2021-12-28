@@ -121,7 +121,7 @@ void load_keys(FILE *efp, struct s_key_data *k, int match_invert)
       exit(EXIT_FAILURE);
     }
 
-  while (getline(&buf, &bsize, fp) > (ssize_t) -1)
+  while (j2_getline(&buf, &bsize, fp) > (ssize_t) -1)
     {
       (k->finfo.io)++;
       add_key_node(efp, k, buf, &reset);

@@ -259,7 +259,7 @@ void load_link(FILE *efp,
       exit(EXIT_FAILURE);
     }
 
-  while (getline(&buf, &bsize, fp) > (ssize_t) -1)
+  while (j2_getline(&buf, &bsize, fp) > (ssize_t) -1)
     {
       (d->finfo.io)++;
       add_node(efp, d, k, buf, &reset, headg, delm);
