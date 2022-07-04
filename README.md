@@ -8,7 +8,7 @@ corresponding data from both Files based upon Column 1.
 
 This is a hack and rather difficult to use, some day I hope to
 rewrite it to make it simpler.
-But for now I put up with the aggravation with using it.
+But for now I put up with the aggravation whe I need to using it.
 
 This requires [j\_lib2](https://github.com/jmcunx/j_lib2) to build.
 
