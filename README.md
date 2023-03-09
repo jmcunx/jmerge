@@ -10,6 +10,8 @@ This is a hack and rather difficult to use, some day I hope to
 rewrite it to make it simpler.
 But for now I put up with the aggravation whe I need to using it.
 
+**I am rewritting this to make it much quicker and easier to use**
+
 This requires [j\_lib2](https://github.com/jmcunx/j_lib2) to build.
 
 [GNU automake](https://en.wikipedia.org/wiki/Automake)
