@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 ... 2021 2022
+ * Copyright (c) 2013 ... 2023 2024
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -14,65 +14,60 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-
-#ifndef _MSDOS
+/*
+ * jmerge_h.c -- Show help/rev routines
+ */
 #include <sys/param.h>
-#endif
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <j_lib2.h>
-#include <j_lib2m.h>
 
 #include "jmerge.h"
 
-/*** Messages ***/
-#define MSG_HELP_11  "Record Merge Utility"
+#define MSG_HELP_11  "Merge files based upon a Key File"
 
 /*
  * show_brief_help()
  */
-int show_brief_help(FILE *fp, char *pname)
+void show_brief_help(FILE *fp, char *pname)
 
 {
 
-  fprintf(fp, USG_MSG_USAGE_2, pname);
+  fprintf(fp, USG_MSG_USAGE, pname);
   fprintf(fp, "\t%s\n", MSG_HELP_11);
   fprintf(fp, USG_MSG_OPTIONS);
-  fprintf(fp, USG_MSG_ARG_CHANGED,     SWITCH_CHAR, ARG_CHANGED);
   fprintf(fp, USG_MSG_ARG_DELM,        SWITCH_CHAR, ARG_DELM);
   fprintf(fp, USG_MSG_ARG_DELM_A);
   fprintf(fp, USG_MSG_ARG_DELM_B);
   fprintf(fp, USG_MSG_ARG_ERR,         SWITCH_CHAR, ARG_ERR);
   fprintf(fp, USG_MSG_ARG_FIRST_HEADG, SWITCH_CHAR, ARG_FIRST_HEADG);
   fprintf(fp, USG_MSG_ARG_FORCE,       SWITCH_CHAR, ARG_FORCE);
-
   fprintf(fp, USG_MSG_ARG_HELP,        SWITCH_CHAR, ARG_HELP);
-  fprintf(fp, USG_MSG_ARG_LIST_MODE,   SWITCH_CHAR, ARG_LIST_MODE);
-  fprintf(fp, USG_MSG_ARG_MATCH_ONLY,  SWITCH_CHAR, ARG_MATCH_ONLY);
+  fprintf(fp, USG_MSG_ARG_INPUT_3,     SWITCH_CHAR, ARG_INPUT);
+  fprintf(fp, USG_MSG_ARG_KEY_STATS,   SWITCH_CHAR, ARG_KEY_STATS);
   fprintf(fp, USG_MSG_ARG_OUT,         SWITCH_CHAR, ARG_OUT);
-  fprintf(fp, USG_MSG_ARG_PATERN_FIL1, SWITCH_CHAR, ARG_PATERN_FILE);
-  fprintf(fp, USG_MSG_ARG_QUIET_1,     SWITCH_CHAR, ARG_QUIET);
+  fprintf(fp, USG_MSG_ARG_READS,       SWITCH_CHAR, ARG_READS);
+  fprintf(fp, USG_MSG_ARG_PAUSE_1,     SWITCH_CHAR, ARG_PAUSE, PAUSE_RECS);
+  fprintf(fp, USG_MSG_ARG_UNSORTED,    SWITCH_CHAR, ARG_UNSORTED);
   fprintf(fp, USG_MSG_ARG_VERSION,     SWITCH_CHAR, ARG_VERSION);
-  fprintf(fp, USG_MSG_ARG_INVERT,      SWITCH_CHAR, ARG_INVERT);
-  fprintf(fp, USG_MSG_ARG_DEBUG_MODE,  SWITCH_CHAR, ARG_DEBUG_MODE);
+  fprintf(fp, USG_MSG_ARG_VERBOSE_8,   SWITCH_CHAR, ARG_VERBOSE);
 
-  return(EXIT_FAILURE);
+  exit(EXIT_FAILURE);
 
 }  /* show_brief_help() */
 
 /*
  * show_rev()
  */
-int show_rev(FILE *fp, char *pname)
+void show_rev(FILE *fp, char *pname)
 
 {
 
   fprintf(fp,"%s %s:\n", pname, LIT_REV);
 
 #ifdef J_LIB2_H
-  fprintf(fp,"\t%s %s\n", LIT_INFO_02, j2_get_build());
+  fprintf(fp, "\t%s %s\n", LIT_INFO_02, j2_get_build());
 #endif
 
 #ifdef OSTYPE
@@ -83,6 +78,6 @@ int show_rev(FILE *fp, char *pname)
 #endif  /* OSTYPE  */
   fprintf(fp, LIT_INFO_01, __DATE__, __TIME__);
 
-  return(EXIT_FAILURE);
+  exit(EXIT_FAILURE);
 
 }  /* show_rev() */

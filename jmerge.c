@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 ... 2021 2022
+ * Copyright (c) 2013 ... 2023 2024
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -14,16 +14,19 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
+/*
+ * jmerge.c -- Main routines
+ */
 
 #ifndef _MSDOS
 #include <sys/param.h>
 #endif
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include <errno.h>
+#include <unistd.h>
 
 #ifdef OpenBSD
 #include <err.h>
@@ -35,10 +38,36 @@
 #include <err.h>
 #endif
 
-#include <j_lib2.h>
-#include <j_lib2m.h>
-
 #include "jmerge.h"
+
+/*
+ * show_file_heading() -- Show run stats
+ */
+void show_file_heading(struct s_file_info *f, char *in_file)
+
+{
+  
+  fprintf(f->fp, "%s\n", LIT_C80);
+  f->lines_writes++;
+
+  if (in_file == (char *) NULL)
+    {
+      f->lines_writes++;
+      fprintf(f->fp, "%s\n", LIT_STDIN);
+    }
+  else
+    {
+      f->lines_writes++;
+      if (strcmp(in_file, FILE_NAME_STDIN) == 0)
+	fprintf(f->fp, "%s\n", LIT_STDIN);
+      else
+	fprintf(f->fp, "%s\n", in_file);
+    }
+  
+  f->lines_writes++;
+  fprintf(f->fp, "%s\n", LIT_C80);
+  
+} /* show_file_heading() */
 
 /*
  * main()
@@ -47,47 +76,25 @@ int main(int argc, char **argv)
 
 {
   struct s_work w;
-  struct s_file_data d1;
-  struct s_file_data d2;
 
 #ifdef OpenBSD
-  if(pledge("stdio rpath wpath cpath",NULL) == -1)
+  if(pledge("stdio rpath wpath cpath flock",NULL) == -1)
     err(1,"pledge\n");
 #endif
 
-  init(argc, argv, &w, &d1, &d2);
+  init(argc, argv, &w);
 
-  compare_d(&d1, &d2, w.first_headg);
+  if (w.arg_sorted == TRUE)
+    process_sorted(argc, argv, &w);
+  else
+    process_random(argc, argv, &w);
 
-  /* display data here */
-  switch (w.list_mode)
-    {
-      case LIST_MODE_1:
-	w.out.io += list_match(w.out.fp, w.show_changed, w.only_match, d1.r, w.delim_in, d2.max_fields);
-	break;
-      case LIST_MODE_2:
-	w.out.io += list_match(w.out.fp, w.show_changed, w.only_match, d2.r, w.delim_in, d1.max_fields);
-	break;
-    }
-
-  /*** DONE ***/
-  if (w.verbose)
-    {
-      fprintf(w.err.fp, MSG_INFO_I003, d1.finfo.io,  0L, 
-              (strcmp(d1.finfo.fname,FILE_NAME_STDIN) == 0 ? LIT_STDIN : d1.finfo.fname));
-      fprintf(w.err.fp, MSG_INFO_I003, d2.finfo.io,  0L, 
-              (strcmp(d2.finfo.fname,FILE_NAME_STDIN) == 0 ? LIT_STDIN : d2.finfo.fname));
-      fprintf(w.err.fp, MSG_INFO_I003, 0L, w.out.io, 
-              (strcmp(w.out.fname,FILE_NAME_STDOUT) == 0 ? LIT_STDOUT : w.out.fname));
-    }
-  if (w.debug)
-    {
-      list_in_raw(w.err.fp, w.show_changed, d1.r, d1.finfo.fname, d2.finfo.fname);
-      list_in_raw(w.err.fp, w.show_changed, d2.r, d2.finfo.fname, d1.finfo.fname);
-    }
-
+  close_in(&(w.key));
   close_out(&(w.out));
   close_out(&(w.err));
+  close_out(&(w.stats));
+  if (w.prog_name != (char *) NULL)
+    free(w.prog_name);
   exit(EXIT_SUCCESS);
 
 }  /* main() */

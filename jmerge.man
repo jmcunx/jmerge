@@ -1,5 +1,5 @@
 .\"
-.\" Copyright (c) 2013 ... 2022 2023
+.\" Copyright (c) 2013 ... 2023 2024
 .\"     John McCue <jmccue@jmcunx.com>
 .\"
 .\" Permission to use, copy, modify, and distribute this software for any
@@ -14,41 +14,26 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.TH JMERGE 1 "2018-07-04" "JMC" "Local Command"
+.TH JMERGE 1 "2020-09-23" "JMC" "User Commands"
 .SH NAME
-jmerge - merge records from 2 data files.
+jmerge - Creates a merged file from 2 or more files.
 .SH SYNOPSIS
-jmerge [OPTIONS] FILE1 FILE2
+jmerge [OPTIONS] [FILE...]
 .SH DESCRIPTION
-Merge data records from 2 Delimited Text Files into a new
-Output File.
+Merge data records from a Data File with one unique 'key'
+with 1 or more Data Files.
+Matched Data from the Data File will be appended to each
+Key File Record, creating an Output File.
 .PP
-Requires exactly 2 input files, FILE1 and FILE2.
-If one the files is named '-' (dash), that file
-will be read using standard input (stdin).
+Requires at least 2 input files.
+One file is a 'Key File' and all other files
+are data that will be appended to each record of the
+Key File.
+This results in a file with Records combined based
+upon the value in the first column of each
+file.
 .PP
-The merge is based upon a 'key'.
-This 'key' must be the first field of each file to be processed.
-One of the files must be unique by key.
-It does not matter which of the files are unique by 'key'.
-.PP
-By default, FILE1 is used as the base for the output
-file generated.
-Records with a matching key in FILE2 will be appended
-to the end of each record in FILE1.
-.TP
--c
-Optional, if specified, will output records where fields
-from each record is different.
-This can be used to show differences between a dump of the same table,
-before/after an update.
-Default is to output all merged data.
-For this mode to work, both input files must:
-.nf
-    1. have the same record format
-    2. be unique by key
-    3. all keys agree between the 2 files
-.fi
+Column 1 of each file is used to match data.
 .TP
 -d delm
 Optional, Fields are delimited by char 'delm'.
@@ -63,99 +48,165 @@ For example to use:
 .fi
 .TP
 -e file
-Optional, if used, write error/stat messages to file 'file'.
-If not specified, messages written to stderr.
+Optional, if used, write error messages to file 'file'.
+If not specified, errors written to stderr.
 .TP
 -F
-Optional, the first record of each of the files
+Optional, the first record of each file
 is a heading record.
-This avoids the out of sequence error when processing data.
+This means the first record on all files
+will be ignored.
 .TP
 -f
-Force file create.
+Optional, Force file create.
 Create file even if the target file exists.
 .TP
 -h
 Show brief help and exit.
 .TP
--l 1|2
-Optional, which match to output.
-.nf
-    delimiter  Use arg
-    ---------  --------------------------------
-       1       List match data based upon FILE1
-       2       List match data based upon FILE2
-.fi
-If not specified will list data based upon FILE1.
+-i file
+Required, this identifies the main driver file.
+All records must be unique by 'key'.
 .TP
--m
-Optional, show only entries where records were matched.
-Default is to show all data whether a match was found or not.
+-K file
+Optional, if used, write counts of matches
+found on Key File (see -i).
+If not specified, file is not created.
 .TP
 -o file
 Optional, if used, write output to file 'file'.
 If not specified, output written to stdout.
 .TP
--p kfile
-Optional, based upon the values in file 'kfile',
-filter Input Data to be processed.
-This means only process data with 'keys' listed in this file
-(or not in this file, see -v below).
+-r n
+Optional, after 'n' Reads, pause for
+the specified milliseconds (see -s below).
+If not specified default to 100 reads.
+Ignored unless '-s' is specified.
 .TP
--q
-Optional, quiet, no NOT print processing stats on stderr.
+-s n
+Optional, if used, after the specified number of Records
+are processed, sleep for 'n' milliseconds (see -r above).
+If not specified, do not sleep (pause) after reading
+a certain number of records (see -r).
+This will help prevent overheating on a Laptop
+that is susceptible to heat.
+But, it will showdown processing.
+.TP
+-u
+Optional, Unsorted.
+All Files are NOT sorted by Key.
+Default, all files are sorted by data in the First Column.
 .TP
 -V
 Output version information and exit.
 .TP
 -v
-Optional, Invert the sense of matching, to select non-matching
-key lines.
-See '-p' above.
-.TP
--X
-Optional, show raw information about the files processed on stderr.
-This can show you how data was matched between the two files.
-Note, depending upon the size of the Input Files,
-this could print lots of data.
+Optional, Verbose Level.
+Print information about the run,
+default do not show run messages.
+Can be specified multiple times,
+each specification increases verbose level:
+.nf
+    Level  Meaning
+    -----  -------------------------------------
+    = 0    Show only Error Messages
+    >= 1   Above plus print show headings on
+           Files created.
+           This heading will show the source
+           Data File.
+    >= 2   Show summary and warnings on stderr
+.fi
+.SH EXAMPLE
+This shows how Data Files are matched/combined.
+.nf
+
+If this is your Key File (-i):
+    001|A
+    002|B
+    003|C
+    005|E
+.fi
+.nf
+
+And this is the Data File:
+    001|AA|B12
+    001|AB|B345
+    003|CA|B5
+    003|CB|B67
+    004|DA|B67
+    005|EA|B89
+    005|EB|B100
+    005|EC|B104
+.fi
+.nf
+
+This is what the combined Output File will look like:
+    MATCHED:  001|A|001|AA|B12
+    MATCHED:  001|A|001|AB|B345
+    MATCHED:  003|C|003|CA|B5
+    MATCHED:  003|C|003|CB|B67
+    NO MATCH: 004|DA|B67
+    MATCHED:  005|E|005|EA|B89
+    MATCHED:  005|E|005|EB|B100
+    MATCHED:  005|E|005|EC|B104
+Note, 'NO MATCH' just prints data from the Data File.
+.fi
+.nf
+
+And this is what the Optional Output Key (-K) Status File
+will look like.
+The first column shows the count of Matches,
+the second column shows the Key.
+    2 001
+    0 002
+    2 003
+    3 005
+.fi
 .SH DIAGNOSTICS
-Note, if an error occurs while parsing command line arguments,
-errors may be written stderr instead of the error file specified.
+A 'key' is the first column on each File.
 .PP
-At the moment, all files must be delimited by a single character.
+If you specify '-e', in some cases info will still be
+written to stderr.
+This can occur during Command Line Argument Processing.
 .PP
-All files processed needs a 'key',
-this key is always the first field of each file.
-The key is used as a basis to merge data from the input files.
+Files read are locked using flock(2),
+but some processes may ignore that lock.
+This is done as an attempt to prevent other processes
+from updating the files being processed.
 .PP
-If you need to use more than one field as a 'key',
-you should preprocess the files using awk(1) and
-generate a new first field as a concatenation of
-the fields you need to examine.
+Best to sort all input files by
+the first column.
+Otherwise runtime could be significant (see -u),
+depending upon the size of the Files.
 .PP
-FILE1 is the 'main' file, by default, all entries from that file will
-be printed with data from the other files appended to each record.
-This means some data from FILE2 will not be printed
-when a match is not found.
-This behaviour can be changed by using argument '-l'.
+When processing unsorted files,
+if the key file (-i) has duplicate records
+the program will not fail.
+Just the duplicates will be ignored.
+This is opposed to processing Sorted Files.
+The Key File must be unique by the First Column
+when processing Sorted Files (the default).
 .PP
-Best if the last character of each record is the delimiter.
-If this is not the case, an empty last field may cause odd
-formatting issues on the output file.
-.SH CAVEATS
-This is not an easy utility to use.
-.PP
-Can fail with File sort issues.
+When processing more than one data file,
+data of the second file is just appended
+to the key file.
+If you want to append data records from
+two or more files like this:
+.nf
+    Key-File-Data|file-1-data|file-2-data
+.fi
+First combine files 1 and 2 into a new file using
+this program, then combine with the key file.
 .SH SEE-ALSO
 awk(1),
-comm(1),
-join(1),
-jr(1),
-jcsv(1),
+cut(1),
+flock(2),
+jcsv(local),
+jr(local),
 paste(1),
-uniq(1)
+sed(1)
 .SH ERROR-CODES
 .nf
-0         success
-non-zero  process error or help/rev displayed
+0 success
+1 processing error or help/rev displayed
 .fi
