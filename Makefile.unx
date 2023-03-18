@@ -78,12 +78,12 @@ EXE=
 OBJ=.o
 
 #--- for prod
-#CFLAGS=-O1 -c $(WALL) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
-#LFLAGS=-O1 $(WALL) -LJLIBLOC -o jmerge $(LIBS)
+CFLAGS=-O1 -c $(WALL) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
+LFLAGS=-O1 $(WALL) -LJLIBLOC -o jmerge $(LIBS)
 
 #--- for valgrind
-CFLAGS=-O0 -g -c $(WALL) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
-LFLAGS=-O0 -g $(WALL) -LJLIBLOC -o jmerge $(LIBS)
+#CFLAGS=-O0 -g -c $(WALL) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
+#LFLAGS=-O0 -g $(WALL) -LJLIBLOC -o jmerge $(LIBS)
 
 ALL_OBJ=jmerge$(OBJ) jmerge_d$(OBJ) jmerge_h$(OBJ) jmerge_j$(OBJ) jmerge_i$(OBJ) jmerge_u$(OBJ) jmerge_r$(OBJ) jmerge_s$(OBJ)
 ALL_C=jmerge.c jmerge_d.c jmerge_h.c jmerge_j.c jmerge_i.c jmerge_u.c jmerge_r.c jmerge_s.c
