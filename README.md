@@ -55,7 +55,7 @@ request to be created:
 | 2 | 003 |
 | 3 | 005 |
 
-#Notes:
+# Notes:
 
 [GNU automake](https://en.wikipedia.org/wiki/Automake)
 only confuses me, but this seems to be good enough for me.
