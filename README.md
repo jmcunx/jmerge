@@ -57,6 +57,8 @@ request to be created:
 
 ## Notes:
 
+[j\_lib2](https://github.com/jmcunx/j_lib2) is an **optional** dependency.
+
 [GNU automake](https://en.wikipedia.org/wiki/Automake)
 only confuses me, but this seems to be good enough for me.
 

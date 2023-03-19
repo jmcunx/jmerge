@@ -33,8 +33,6 @@
 #include <ctype.h>
 #include <time.h>
 
-#include <j_lib2m.h>
-
 #include "jmerge.h"
 
 /*

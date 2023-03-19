@@ -68,7 +68,9 @@ CTAGS=ctags
 ECHO=echo
 GZIP=gzip
 LINK=cc
-LIBS=
+#FOUND_JLIB#LIBS=-lj_lib2
+#NO_JLIB#LIBS=
+#FOUND_JLIB#HJLIB=-DHAVE_JLIB
 MV=mv
 RM=rm -f
 STRIP=strip
@@ -78,15 +80,20 @@ EXE=
 OBJ=.o
 
 #--- for prod
-CFLAGS=-O1 -c $(WALL) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
-LFLAGS=-O1 $(WALL) -LJLIBLOC -o jmerge $(LIBS)
+CFLAGS=-O1 -c $(WALL) $(HJLIB) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
+#FOUND_JLIB#LFLAGS=-O1 $(WALL) -LJLIBLOC -o jmerge $(LIBS)
+#NO_JLIB#LFLAGS=-O1 $(WALL) -o jmerge $(LIBS)
 
 #--- for valgrind
-#CFLAGS=-O0 -g -c $(WALL) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
+#CFLAGS=-O0 -g -c $(WALL) $(HJLIB) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
 #LFLAGS=-O0 -g $(WALL) -LJLIBLOC -o jmerge $(LIBS)
 
-ALL_OBJ=jmerge$(OBJ) jmerge_d$(OBJ) jmerge_h$(OBJ) jmerge_j$(OBJ) jmerge_i$(OBJ) jmerge_u$(OBJ) jmerge_r$(OBJ) jmerge_s$(OBJ)
-ALL_C=jmerge.c jmerge_d.c jmerge_h.c jmerge_j.c jmerge_i.c jmerge_u.c jmerge_r.c jmerge_s.c
+#--- continue on
+#NO_JLIB#JCC=jmerge_j.c
+#NO_JLIB#JCOB=jmerge_j$(OBJ)
+
+ALL_OBJ=jmerge$(OBJ) jmerge_d$(OBJ) jmerge_h$(OBJ) $(JCOB) jmerge_i$(OBJ) jmerge_u$(OBJ) jmerge_r$(OBJ) jmerge_s$(OBJ)
+ALL_C=jmerge.c jmerge_d.c jmerge_h.c $(JCC) jmerge_i.c jmerge_u.c jmerge_r.c jmerge_s.c
 ALL_H=jmerge.h
 
 #

@@ -33,7 +33,60 @@
 #endif
 
 #ifndef JLIB2_CHAR_NULL
+#define NO_JLIB 1
 #define JLIB2_CHAR_NULL  ((char) '\0')
+#endif
+
+/*** structures ***/
+struct s_file_info
+{
+  FILE *fp;
+  char *fname;
+  int abort_on_lock;
+  int lock_succeeded;
+  long int lines_read;
+  long int lines_writes;
+  long int count_match;
+} ;
+
+struct s_buffer
+{
+  char *buf;
+  char *match_key;
+  char *last_match_key;
+  size_t bsiz;
+  size_t ksiz;
+  ssize_t stat_read;
+  char delm;                  /* field delimiter       */
+} ;
+struct s_key_data
+{
+  struct s_key_data *next;
+  long int count_match;
+  long int pos;
+  char *k;
+};
+
+#define NULL_KEY_DATA ((struct s_key_data *) NULL)
+
+struct s_work
+{
+  struct s_file_info key;         /* main 'key' file       */
+  struct s_file_info out;         /* default stdout        */
+  struct s_file_info err;         /* default stderr        */
+  struct s_file_info stats;       /* write main file stats */
+  char *prog_name;                /* real program name     */
+  int arg_verbose;                /* TRUE or FALSE         */
+  int arg_heading;                /* TRUE or FALSE         */
+  int arg_force;                  /* TRUE or FALSE         */
+  int arg_sorted;                 /* TRUE of FALSE         */
+  long int arg_milliseconds;      /* milliseconds to pause         */
+  long int arg_pause_reads;       /* pause after this many reads   */
+  char arg_delm;                  /* field delimiter       */
+} ;
+
+/*** messages ***/
+#ifdef NO_JLIB
 #define SWITCH_CHAR       '-'
 #define FILE_NAME_STDIN   "-"
 #define LIT_STDIN         "(standard input)"
@@ -94,58 +147,7 @@
 #define USG_MSG_ARG_VERSION              "\t%c%c\t\t: Show revision information and exit\n"
 #define USG_MSG_OPTIONS                  "Options\n"
 #define USG_MSG_USAGE                    "usage:\t%s [OPTIONS] [FILES ...]\n"
-
-#endif
-
-/*** structures ***/
-struct s_file_info
-{
-  FILE *fp;
-  char *fname;
-  int abort_on_lock;
-  int lock_succeeded;
-  long int lines_read;
-  long int lines_writes;
-  long int count_match;
-} ;
-
-struct s_buffer
-{
-  char *buf;
-  char *match_key;
-  char *last_match_key;
-  size_t bsiz;
-  size_t ksiz;
-  ssize_t stat_read;
-  char delm;                  /* field delimiter       */
-} ;
-struct s_key_data
-{
-  struct s_key_data *next;
-  long int count_match;
-  long int pos;
-  char *k;
-};
-
-#define NULL_KEY_DATA ((struct s_key_data *) NULL)
-
-struct s_work
-{
-  struct s_file_info key;         /* main 'key' file       */
-  struct s_file_info out;         /* default stdout        */
-  struct s_file_info err;         /* default stderr        */
-  struct s_file_info stats;       /* write main file stats */
-  char *prog_name;                /* real program name     */
-  int arg_verbose;                /* TRUE or FALSE         */
-  int arg_heading;                /* TRUE or FALSE         */
-  int arg_force;                  /* TRUE or FALSE         */
-  int arg_sorted;                 /* TRUE of FALSE         */
-  long int arg_milliseconds;      /* milliseconds to pause         */
-  long int arg_pause_reads;       /* pause after this many reads   */
-  char arg_delm;                  /* field delimiter       */
-} ;
-
-/*** messages ***/
+#endif /* NO_JLIB */
 
 /*** prototypes ***/
 void init(int, char **, struct s_work *);
@@ -170,11 +172,13 @@ void key_clear_counts(struct s_key_data *);
 struct s_key_data *key_search(char *, struct s_key_data *);
 void process_random(int, char **, struct s_work *);
 
+#ifdef NO_JLIB
 char *j2_get_prgname(char *, char *);
 int j2_is_numr(char *);
 long int j2_rtw(char *);
 int j2_f_exist(char *);
 void j2_sleepm(long int);
+#endif /* NO_JLIB */
 
 #endif /*  JMERGE_H  */
 

@@ -29,6 +29,11 @@
 #include <unistd.h>
 #include <errno.h>
 
+#ifdef HAVE_JLIB
+#include <j_lib2.h>
+#include <j_lib2m.h>
+#endif
+
 #include "jmerge.h"
 
 /*
