@@ -176,7 +176,7 @@ struct s_key_data *key_load(FILE *errfp,
       exit(EXIT_FAILURE);
     }
 
-  while (getline(&buf, &bsize, f->fp) >= (ssize_t) 0)
+  while (j2_getline(&buf, &bsize, f->fp) >= (ssize_t) 0)
     {
       f->lines_read++;
       j2_rtw(buf);

@@ -251,7 +251,7 @@ int read_buf(FILE *efp, struct s_buffer *b, struct s_file_info *f)
   if (b->stat_read < (ssize_t) 0L)
     return(FALSE);
 
-  b->stat_read = getline(&(b->buf), &(b->bsiz), f->fp);
+  b->stat_read = j2_getline(&(b->buf), &(b->bsiz), f->fp);
 
   if (b->stat_read < (ssize_t) 0)
     return(FALSE);

@@ -35,6 +35,11 @@
 #ifndef JLIB2_CHAR_NULL
 #define NO_JLIB 1
 #define JLIB2_CHAR_NULL  ((char) '\0')
+#ifdef _MSDOS
+#define SSIZE_T unsigned long int
+#else
+#define SSIZE_T ssize_t
+#endif
 #endif
 
 /*** structures ***/
@@ -178,6 +183,7 @@ int j2_is_numr(char *);
 long int j2_rtw(char *);
 int j2_f_exist(char *);
 void j2_sleepm(long int);
+SSIZE_T j2_getline(char **buf, size_t *n, FILE *fp);
 #endif /* NO_JLIB */
 
 #endif /*  JMERGE_H  */

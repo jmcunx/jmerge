@@ -178,7 +178,7 @@ long int process_a_sort_file(struct s_work *w, char *fname,
     {
       fprintf(w->stats.fp, "%11ld %s\n", w->key.count_match, buf_key->match_key);
       w->stats.lines_writes++;
-      while (getline(&(buf_key->buf), &(buf_key->bsiz), w->key.fp) > -1)
+      while (j2_getline(&(buf_key->buf), &(buf_key->bsiz), w->key.fp) > -1)
 	{
 	  sdlm = strchr(buf_key->buf, w->arg_delm);
 	  if (sdlm != (char *) NULL)

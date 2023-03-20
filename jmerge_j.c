@@ -35,6 +35,23 @@
 
 #include "jmerge.h"
 
+#ifdef _AIX
+#define HAS_GETLINE 1
+#endif
+#ifdef __NetBSD_Version__
+#define HAS_GETLINE 1
+#endif
+#ifdef OpenBSD
+#define HAS_GETLINE 1
+#endif
+#ifdef __FreeBSD__
+#define HAS_GETLINE 1
+#endif
+#ifdef linux
+#define HAS_GETLINE 1
+#endif
+#define SIZE_GETLINE_BUF 256
+
 /*
  * j2_get_prgname() -- return filename or default name.
  *
@@ -77,6 +94,33 @@ char *j2_get_prgname(char *argv_0, char *default_name)
     return(strdup(&(argv_0[j])));
 
 }
+
+/*
+ * j2_getline() -- A front end to getline(3) or a hack for
+ *                 systems without getline(3)
+ */
+SSIZE_T j2_getline(char **buf, size_t *n, FILE *fp)
+{
+#ifdef HAS_GETLINE
+  return(getline(buf, n, fp));
+#else
+  
+  if ((*buf) == (char *) NULL)
+    {
+      (*n) = SIZE_GETLINE_BUF + 1;
+      (*buf) = (char *) malloc(((*n) * sizeof(char)));
+      if ((*buf) == (char *) NULL)
+	return(-1);
+      j2_clr_str((*buf), (*n), JLIB2_CHAR_NULL);
+    }
+    
+  if (fgets((*buf), (*n), fp) == (char *) NULL)
+    return(-1);
+  return((SSIZE_T) strlen((*buf)));
+  
+#endif
+  
+} /* j2_getline() */
 
 /*
  * j2_is_numr() -- determines if all characters are numeric

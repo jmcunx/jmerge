@@ -68,8 +68,8 @@ CTAGS=ctags
 ECHO=echo
 GZIP=gzip
 LINK=cc
-#FOUND_JLIB#LIBS=-lj_lib2
 #NO_JLIB#LIBS=
+#FOUND_JLIB#LIBS=-lj_lib2
 #FOUND_JLIB#HJLIB=-DHAVE_JLIB
 MV=mv
 RM=rm -f
@@ -85,8 +85,9 @@ CFLAGS=-O1 -c $(WALL) $(HJLIB) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
 #NO_JLIB#LFLAGS=-O1 $(WALL) -o jmerge $(LIBS)
 
 #--- for valgrind
-#CFLAGS=-O0 -g -c $(WALL) $(HJLIB) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
-#LFLAGS=-O0 -g $(WALL) -LJLIBLOC -o jmerge $(LIBS)
+#VALGRIND#CFLAGS=-O0 -g -c $(WALL) $(HJLIB) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
+#VALGRIND##FOUND_JLIB#LFLAGS=-O0 -g $(WALL) -LJLIBLOC -o jmerge $(LIBS)
+#VALGRIND##NO_JLIB#LFLAGS=-O0 -g $(WALL) -o jmerge $(LIBS)
 
 #--- continue on
 #NO_JLIB#JCC=jmerge_j.c

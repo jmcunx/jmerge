@@ -43,7 +43,7 @@ ssize_t read_a_line(struct s_file_info *inf, struct s_buffer *buf_in)
 {
   ssize_t r = (ssize_t) 0;
 
-  r = getline(&(buf_in->buf), &(buf_in->bsiz), inf->fp);
+  r = j2_getline(&(buf_in->buf), &(buf_in->bsiz), inf->fp);
 
   if (r > -1)
     {
@@ -103,7 +103,7 @@ int search_randomf(struct s_work *w,
               strerror(errno), w->key.fname);
       exit(EXIT_FAILURE);
     }
-  if (getline(&(buf_key->buf), &(buf_key->bsiz), w->key.fp) < 0)
+  if (j2_getline(&(buf_key->buf), &(buf_key->bsiz), w->key.fp) < 0)
     {
       fprintf(w->err.fp, MSG_ERR_E093, found->pos,
               strerror(errno), w->key.fname);
