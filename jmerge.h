@@ -185,6 +185,7 @@ int j2_f_exist(char *);
 void j2_sleepm(long int);
 SSIZE_T j2_getline(char **buf, size_t *n, FILE *fp);
 #endif /* NO_JLIB */
+long int j2_clr_str(char *s, char c, int size);
 
 #endif /*  JMERGE_H  */
 

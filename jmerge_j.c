@@ -96,6 +96,22 @@ char *j2_get_prgname(char *argv_0, char *default_name)
 }
 
 /*
+ * j2_clr_str() -- Clears a string with a char & ensure it ends with NULL
+ */
+long int j2_clr_str(char *s, char c, int size)
+  
+{
+  if (s == (char *) NULL)
+    return(0L);
+  
+  memset(s, (int) c, (size_t) size);
+  s[size - 1 ] = JLIB2_CHAR_NULL;
+
+  return((long int) strlen(s));
+
+} /* j2_clr_str() */
+
+/*
  * j2_getline() -- A front end to getline(3) or a hack for
  *                 systems without getline(3)
  */
