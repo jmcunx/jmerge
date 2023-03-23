@@ -117,10 +117,18 @@ each specification increases verbose level:
     >= 2   Show summary and warnings on stderr
 .fi
 .SH EXAMPLE
-This shows how Data Files are matched/combined.
+The command will combine key_file.txt and data_file.txt
+printing output on stdout.
+File stat.txt will also be created showing Record
+Match Counts.
 .nf
 
-If this is your Key File (-i):
+Command:
+   % jmerge -d '|' -i key_file.txt -K stat.txt data_file.txt
+
+Results:
+
+If this is your Input Key File (-i key_file.txt):
     001|A
     002|B
     003|C
@@ -128,7 +136,7 @@ If this is your Key File (-i):
 .fi
 .nf
 
-And this is the Data File:
+And this is the Input Data File (data_file.txt):
     001|AA|B12
     001|AB|B345
     003|CA|B5
@@ -153,8 +161,8 @@ Note, 'NO MATCH' just prints data from the Data File.
 .fi
 .nf
 
-And this is what the Optional Output Key (-K) Status File
-will look like.
+And this is what the Optional Output Key (-K stat.txt)
+Status File will look like.
 The first column shows the count of Matches,
 the second column shows the Key.
     2 001

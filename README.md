@@ -8,9 +8,12 @@ Each record on Output will be a concatenation of the
 corresponding data from both Files based upon Column 1
 with a tag indicating if a match was found.
 
-For example if you have these Two Files:
+For example if you have the Two Files shown below.
+This command will produce the results as shown:
 
-The Main (key) File.  Records unique by Column 1:
+* jmerge -d '|' -i key.txt -K stat.txt dat.txt 
+
+The Main (key) File (key.txt).  Records unique by Column 1:
 
 | Col 1 | Col 2 |
 | :--- | :--- |
@@ -19,7 +22,7 @@ The Main (key) File.  Records unique by Column 1:
 | 003| C |
 | 005| E |
 
-The Data File, Multiple Records per Column 1:
+The Data File (dat.txt), Multiple Records per Column 1:
 
 | Col 1 | Col 2 | Col 3 |
 | :--- | :--- | :--- |
@@ -45,7 +48,7 @@ This is the Output File Created, notice the Tag:
 | MATCHED:  005 | E | 005|EB | B100
 | MATCHED:  005 | E | 005|EC | B104
 
-And this is the Match Stats File you can
+And this is the Output Match Stats File you can
 request to be created:
 
 | Count of Matches | Key Value |
