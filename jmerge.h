@@ -145,7 +145,7 @@ struct s_work
 #define USG_MSG_ARG_INPUT_3              "\t%c%c file\t\t: Input File for Merge Driver File\n"
 #define USG_MSG_ARG_KEY_STATS            "\t%c%c file\t\t: Write Match Key Stats to 'file'\n"
 #define USG_MSG_ARG_OUT                  "\t%c%c file\t\t: Write output to file 'file', default stdout\n"
-#define USG_MSG_ARG_PAUSE_1              "\t%c%c n\t\t: Sleep 'n' microseconds after processing %d records\n"
+#define USG_MSG_ARG_PAUSE_1              "\t%c%c n\t\t: Sleep 'n' microseconds based upon records processed\n"
 #define USG_MSG_ARG_READS                "\t%c%c n\t\t: Optional, after 'n' reads, pause\n"
 #define USG_MSG_ARG_UNSORTED             "\t%c%c\t\t: Data is unsorted, use slow option\n"
 #define USG_MSG_ARG_VERBOSE_8            "\t%c%c\t\t: verbose level, each time specified level increases\n"

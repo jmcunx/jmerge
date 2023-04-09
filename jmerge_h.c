@@ -53,7 +53,7 @@ void show_brief_help(FILE *fp, char *pname)
   fprintf(fp, USG_MSG_ARG_KEY_STATS,   SWITCH_CHAR, ARG_KEY_STATS);
   fprintf(fp, USG_MSG_ARG_OUT,         SWITCH_CHAR, ARG_OUT);
   fprintf(fp, USG_MSG_ARG_READS,       SWITCH_CHAR, ARG_READS);
-  fprintf(fp, USG_MSG_ARG_PAUSE_1,     SWITCH_CHAR, ARG_PAUSE, PAUSE_RECS);
+  fprintf(fp, USG_MSG_ARG_PAUSE_1,     SWITCH_CHAR, ARG_PAUSE);
   fprintf(fp, USG_MSG_ARG_UNSORTED,    SWITCH_CHAR, ARG_UNSORTED);
   fprintf(fp, USG_MSG_ARG_VERSION,     SWITCH_CHAR, ARG_VERSION);
   fprintf(fp, USG_MSG_ARG_VERBOSE_8,   SWITCH_CHAR, ARG_VERBOSE);
