@@ -47,8 +47,7 @@ struct s_file_info
 {
   FILE *fp;
   char *fname;
-  int abort_on_lock;
-  int lock_succeeded;
+  int fileno;
   long int lines_read;
   long int lines_writes;
   long int count_match;

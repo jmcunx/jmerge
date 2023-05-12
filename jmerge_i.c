@@ -50,7 +50,6 @@ void init_w(struct s_work *w, char *a)
   init_finfo(&(w->stats));
   w->err.fp    = stderr;
   w->out.fp    = stdout;
-  w->key.abort_on_lock = TRUE;
 
   w->prog_name        = j2_get_prgname(a, PROG_NAME);
   w->arg_verbose      = 0;

@@ -48,8 +48,7 @@ void init_finfo(struct s_file_info *f)
 
   f->fp    = (FILE *) NULL;
   f->fname = (char *) NULL;
-  f->lock_succeeded = FALSE;
-  f->abort_on_lock  = FALSE;
+  f->fileno         = -1;
   f->lines_read     = 0L;
   f->lines_writes   = 0L;
   f->count_match    = 0L;
@@ -63,7 +62,7 @@ int open_in(FILE *wfp, struct s_file_info *f, char *prog_name)
 
 {
 
-  f->lock_succeeded = FALSE;
+  f->fileno = -1;
 
   if (f->fname == (char *) NULL)
     {
@@ -77,30 +76,32 @@ int open_in(FILE *wfp, struct s_file_info *f, char *prog_name)
     }
 
   f->fp = fopen(f->fname, "r");
-
   if (f->fp == (FILE *) NULL)
     {
       fprintf(wfp, MSG_WARN_W002, f->fname, strerror(errno));
       return(FALSE);
     }
 
-  if (flock(fileno(f->fp), LOCK_EX | LOCK_NB) == -1)
+  f->fileno = fileno(f->fp);
+  if (f->fileno == -1)
     {
-      if (f->abort_on_lock == TRUE)
-	{
-	  fprintf(wfp, MSG_ERR_E091, f->fname, strerror(errno));
-	  fprintf(stderr, MSG_ERR_E000, prog_name, SWITCH_CHAR, ARG_HELP);
-	  fclose(f->fp);
-	  close_in(f);
-	  exit(EXIT_FAILURE);
-	}
-      else
-	fprintf(wfp, MSG_WARN_W031, f->fname, strerror(errno));
+	fprintf(wfp, MSG_ERR_E091, f->fname, strerror(errno));
+	fprintf(wfp, MSG_ERR_E000, prog_name, SWITCH_CHAR, ARG_HELP);
+	fclose(f->fp);
+	close_in(f);
+	exit(EXIT_FAILURE);
+    }
+
+  if (flock(f->fileno, LOCK_EX | LOCK_NB) == -1)
+    {
+      fprintf(wfp, MSG_ERR_E091, f->fname, strerror(errno));
+      fprintf(wfp, MSG_ERR_E000, prog_name, SWITCH_CHAR, ARG_HELP);
+      fclose(f->fp);
+      close_in(f);
+      exit(EXIT_FAILURE);
       close_in(f);
       return(FALSE);
     }
-  else
-    f->lock_succeeded = TRUE;
 
   return(TRUE);
 
@@ -155,12 +156,12 @@ void close_in(struct s_file_info *f)
 
   if (f->fp != (FILE *) NULL)
     {
-      if (f->lock_succeeded == TRUE)
-	flock(fileno(f->fp), LOCK_UN);
+      if (f->fileno != -1)
+	flock(f->fileno, LOCK_UN);
       fclose(f->fp);
-      free(f->fname);
-      f->fp = stdin;
     }
+  if (f->fname != (char *) NULL)
+    free(f->fname);
 
   init_finfo(f);
 
