@@ -11,7 +11,7 @@ with a tag indicating if a match was found.
 For example if you have the Two Files shown below.
 This command will produce the results as shown:
 
-* jmerge -d '|' -i key.txt -K stat.txt dat.txt 
+* jmerge -d '|' -i key.txt -K stat.txt dat.txt
 
 The Main (key) File (key.txt).  Records unique by Column 1:
 
