@@ -1,5 +1,11 @@
 ## jmerge -- Merge data from Two Text Files
 
+If 
+[join(1)](https://man.netbsd.org/join.1)
+is available on your system, you should use
+[join(1)](https://man.netbsd.org/join.1)
+instead of jmerge.
+
 jmerge will Merge Data Records from Two or more Delimited
 Text Files creating One Merged File.
 
