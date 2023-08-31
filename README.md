@@ -14,7 +14,7 @@ is available on your system, you should use
 [join(1)](https://man.netbsd.org/join.1)
 instead of jmerge.
 
-jmerge will Merge Data Records from Two or more Delimited
+jmerge will Merge Data Records from Two Delimited
 Text Files creating One Merged File.
 
 The merge will occur based upon the First Column of each File.
