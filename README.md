@@ -54,8 +54,8 @@ The Data File (dat.txt), Multiple Records per Column 1:
 
 This is the Output File Created, notice the Tag:
 
-| Col 1 with Tag | Col 2 | Col 3 | Col 4 |
-| :--- | :--- | :--- | :--- |
+| Col 1 with Tag | Col 2 | Col 3 | Col 4 | Col 5 |
+| :--- | :--- | :--- | :--- | :--- |
 | MATCHED:  001 | A | 001 | AA | B12 |
 | MATCHED:  001 | A | 001 | AB | B345 |
 | MATCHED:  003 | C | 003 | CA | B5 |
